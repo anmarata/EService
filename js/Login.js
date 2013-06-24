@@ -16,7 +16,7 @@ var Login = {
         });
         $.ajax({
             type: "GET",
-            url: "../rest/Login.ashx?u=" + user.value + "&p=" + password.value,
+            url: "http://190.143.79.13:89/rest/Login.ashx?u=" + user.value + "&p=" + password.value,
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {
