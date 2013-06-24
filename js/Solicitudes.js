@@ -12,7 +12,7 @@ var Solicitudes = {
         $.mobile.loading("show", { text: "Cargando Solicitudes", textVisible: true, theme: "b", textonly: false, html: "" });
         $.ajax({
             type: "POST",
-            url: "../rest/Catalogos.ashx?c=SOL",
+            url: "http://190.143.79.13:89/rest/Catalogos.ashx?c=SOL",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {
@@ -47,7 +47,7 @@ var Solicitudes = {
             var exito = false;
             $.ajax({
                 type: "POST",
-                url: "../html5/rest/solicitudes.aspx/solicitud",
+                url: "http://190.143.79.13:89/html5/rest/solicitudes.aspx/solicitud",
                 data: "{ 'id':" + id + "}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -68,7 +68,7 @@ var Solicitudes = {
             var exito = false;
             $.ajax({
                 type: "POST",
-                url: "../html5/rest/solicitudes.aspx/CerrarSolicitud",
+                url: "http://190.143.79.13:89/html5/rest/solicitudes.aspx/CerrarSolicitud",
                 data: "{'id':'" + Sol_ID + "','FechaInicio':'" + $("#txtFechaInicio").val() + ' ' + $("#cboHoraInicial").val() + "','FechaCierre':'" + $("#txtFechaFinal").val() + ' ' + $("#cboHoraFinal").val() + "','NumeroReporte':'" + $("#txtNumeroReporte").val() + "','TipoCierre':'" + $("#txtNumRep").val() + "','UsuarioAtiende':'" + _user.ID + "','usr':'" + _user.login + "','Observaciones':'" + $("#txtObservaciones").val() + "', 'diferencia' : '" + diferencia + "'}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -85,7 +85,7 @@ var Solicitudes = {
         ValidarFechas: function (envio) {
             $.ajax({
                 type: "POST",
-                url: "../html5/rest/solicitudes.aspx/ValidarFechaCierre",
+                url: "http://190.143.79.13:89/html5/rest/solicitudes.aspx/ValidarFechaCierre",
                 data: "{ 'fechaapertura':'" + $("#lblFecApertura").val() + "','fechainicio':'" + $("#txtFechaInicio").val() + ' ' + $("#cboHoraInicial").val() + "', 'fechacierre':'" + $("#txtFechaFinal").val() + ' ' + $("#cboHoraFinal").val() + "','usuario':'" + _user.login + "', 'diferencia':" + diferencia + "}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",

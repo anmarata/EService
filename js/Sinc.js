@@ -2,7 +2,7 @@
     Permisos: function (control) {
         $.ajax({
             type: "POST",
-            url: "../rest/Catalogos.ashx?c=P",
+            url: "http://190.143.79.13:89/rest/Catalogos.ashx?c=P",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {
@@ -22,7 +22,7 @@
     Clientes: function (control) {
         $.ajax({
             type: "POST",
-            url: "../rest/Catalogos.ashx?c=C",
+            url: "http://190.143.79.13:89/rest/Catalogos.ashx?c=C",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {
@@ -42,7 +42,7 @@
     Sucursales: function (control) {
         $.ajax({
             type: "POST",
-            url: "../rest/Catalogos.ashx?c=S",
+            url: "http://190.143.79.13:89/rest/Catalogos.ashx?c=S",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {
@@ -62,7 +62,7 @@
     Equipos: function (control) {
         $.ajax({
             type: "POST",
-            url: "../rest/Catalogos.ashx?c=E",
+            url: "http://190.143.79.13:89/rest/Catalogos.ashx?c=E",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {
@@ -82,7 +82,7 @@
     TipoSolicitud: function (control) {
         $.ajax({
             type: "POST",
-            url: "../rest/Catalogos.ashx?c=TS",
+            url: "http://190.143.79.13:89/rest/Catalogos.ashx?c=TS",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {
@@ -104,7 +104,7 @@
         InsertarValores: function (control) {
             $.ajax({
                 type: "POST",
-                url: "../rest/Catalogos.ashx?c=V",
+                url: "http://190.143.79.13:89/rest/Catalogos.ashx?c=V",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (data) {
@@ -144,7 +144,7 @@
             else {
                 $.ajax({
                     type: "POST",
-                    url: "../rest/Catalogos.ashx?c=V",
+                    url: "http://190.143.79.13:89/rest/Catalogos.ashx?c=V",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (data) {
