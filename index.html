@@ -16,6 +16,7 @@
     <script src="js/Reportes.js"></script>
     <script>
         var diferencia = new Date().getTimezoneOffset();
+
         DB.CrearTablas();
         $(function () {
             $("#progressbar").progressbar({
@@ -28,13 +29,15 @@
                 $("#cboRepHoraInicio").append(new Option(("0" + t.getHours()).slice(-2) + ":" + ("0" + t.getMinutes()).slice(-2), ("0" + t.getHours()).slice(-2) + ":" + ("0" + t.getMinutes()).slice(-2), false, false));
                 $("#cboRepHoraFinal").append(new Option(("0" + t.getHours()).slice(-2) + ":" + ("0" + t.getMinutes()).slice(-2), ("0" + t.getHours()).slice(-2) + ":" + ("0" + t.getMinutes()).slice(-2), false, false));
                 $("#cboTiempotraslado").append(new Option(("0" + t.getHours()).slice(-2) + ":" + ("0" + t.getMinutes()).slice(-2), ("0" + t.getHours()).slice(-2) + ":" + ("0" + t.getMinutes()).slice(-2), false, false));
+
                 t.setMinutes(t.getMinutes() + 15);
             }
             $("#cboTipoCierre").change(function (event) {
                 switch ($(this).val()) {
                     case "3":
                     case "1":
-                        window.location.href = 'cierrereportes.html?so_id=' + getParameterByName("id");
+                        $.mobile.changePage("#pagIngRep", { transition: "none", reverse: false, changeHash: false });
+                        Reportes.Cargar();
                         break;
                 }
             });
@@ -82,7 +85,6 @@
             <h4>Sincronizacion de Archivos</h4>
             <div id="progressbar"></div>
             <ul data-role="listview" data-count-theme="c" data-inset="true">
-                <li data-icon="refresh"><a href="#">Permisos<span class="ui-li-count" id="spanPermisos">0 %</span></a></li>
                 <li data-icon="refresh"><a href="#">Clientes<span class="ui-li-count" id="spanClientes">0 %</span></a></li>
                 <li data-icon="refresh"><a href="#">Sucursales<span class="ui-li-count" id="spanSucursal">0 %</span></a></li>
                 <li data-icon="refresh"><a href="#">Equipos<span class="ui-li-count" id="spanEquipos">0 %</span></a></li>
@@ -229,16 +231,19 @@
             <a href="Javascript:Reportes.Nuevo();" data-role="button" data-icon="plus" data-iconpos="notext" data-theme="b" data-inline="true" class="ui-icon-plus" data-transition="slide">Nuevo</a>
         </div>
         <div data-role="content">
-
+            <div data-role="popup" id="popupAlert" class="ui-content" style="max-width: 280px">
+                <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Cerrar</a>
+                <p>Alertas </p>
+            </div>
             <div data-role="collapsible-set">
                 <div data-role="collapsible" data-collapsed="false" data-theme="b" data-content-theme="c">
                     <h3>Informacion del Reporte</h3>
                     <div data-role="fieldcontain">
                         <label for="cboCliente">Cliente:</label>
-                        <select id="cboCliente" name="" data-mini="true" required></select>
+                        <select id="cboCliente" name=""  data-mini="true" required></select>
                     </div>
                     <div data-role="fieldcontain">
-                        <label for="cboSucursal">Sucursal:</label><select id="cboSucursal" name="" data-mini="true" required></select>
+                        <label for="cboSucursal">Sucursal:</label><select id="cboSucursal" name=""  data-mini="true" required></select>
                     </div>
                     <div data-role="fieldcontain">
                         <label for="cboEquipo">Equipo:</label><select id="cboEquipo" name="" data-mini="true" required></select>
@@ -317,9 +322,7 @@
                     </div>
                 </div>
             </div>
-            <button data-theme="b" data-icon="check" data-iconpos="right" value="Guardar" onclick="report_Save();">Guardar</button>
-
-
+            <button data-theme="b" data-icon="check" data-iconpos="right" value="Guardar" onclick="JavaScript:Reportes.Validar.FechaCierre(true);">Guardar</button>
         </div>
     </div>
 </body>

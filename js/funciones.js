@@ -52,6 +52,11 @@ function ArmarSelect(idcontrol, result, id) {
         if (id != result.rows.item(i).ID) { $(idcontrol).append('<option value="' + result.rows.item(i).ID + '">' + result.rows.item(i).DESCRIPCION + '</option>'); }
         else { $(idcontrol).append('<option value="' + result.rows.item(i).ID + '" selected>' + result.rows.item(i).DESCRIPCION + '</option>'); }
     }
-  
-    $("idcontrol").selectmenu("refresh", true);
+    
+    $(idcontrol).selectmenu("refresh", true);
+}
+function CboVal(control, valor)
+{
+    $(control).val(valor);
+    $(control).selectmenu("refresh", true);
 }

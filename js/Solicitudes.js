@@ -2,7 +2,7 @@
 var Solicitudes = {
     Lista: function () {        
         $.mobile.changePage("#pagListSol", {
-            transition: "slide",
+            transition: "none",
             reverse: false,
             changeHash: false
         });
@@ -12,7 +12,7 @@ var Solicitudes = {
         $.mobile.loading("show", { text: "Cargando Solicitudes", textVisible: true, theme: "b", textonly: false, html: "" });
         $.ajax({
             type: "POST",
-            url: "http://190.143.79.13:89/rest/Catalogos.ashx?c=SOL",
+            url: "http://eservice.rochembiocare.com/rest/Catalogos.ashx?c=SOL&p=" + _user.Permisos.Paises + "&a=" + _user.Permisos.Areas + "&u=" + _user.login,
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {
@@ -47,7 +47,7 @@ var Solicitudes = {
             var exito = false;
             $.ajax({
                 type: "POST",
-                url: "http://190.143.79.13:89/html5/rest/solicitudes.aspx/solicitud",
+                url: "http://eservice.rochembiocare.com/html5/rest/solicitudes.aspx/solicitud",
                 data: "{ 'id':" + id + "}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -60,7 +60,7 @@ var Solicitudes = {
                     $("#txtSolicitud").val(data.d.Motivo);
                     $("#txtNumRep").val(data.d.NumeroReporte);
                     $.mobile.loading("hide");
-                    $.mobile.changePage("#pagCloseSol", { transition: "slide", reverse: false, changeHash: false });
+                    $.mobile.changePage("#pagCloseSol", { transition: "none", reverse: false, changeHash: false });
                 }
             });
         },
@@ -68,7 +68,7 @@ var Solicitudes = {
             var exito = false;
             $.ajax({
                 type: "POST",
-                url: "http://190.143.79.13:89/html5/rest/solicitudes.aspx/CerrarSolicitud",
+                url: "http://eservice.rochembiocare.com/html5/rest/solicitudes.aspx/CerrarSolicitud",
                 data: "{'id':'" + Sol_ID + "','FechaInicio':'" + $("#txtFechaInicio").val() + ' ' + $("#cboHoraInicial").val() + "','FechaCierre':'" + $("#txtFechaFinal").val() + ' ' + $("#cboHoraFinal").val() + "','NumeroReporte':'" + $("#txtNumeroReporte").val() + "','TipoCierre':'" + $("#txtNumRep").val() + "','UsuarioAtiende':'" + _user.ID + "','usr':'" + _user.login + "','Observaciones':'" + $("#txtObservaciones").val() + "', 'diferencia' : '" + diferencia + "'}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -85,7 +85,7 @@ var Solicitudes = {
         ValidarFechas: function (envio) {
             $.ajax({
                 type: "POST",
-                url: "http://190.143.79.13:89/html5/rest/solicitudes.aspx/ValidarFechaCierre",
+                url: "http://eservice.rochembiocare.com/html5/rest/solicitudes.aspx/ValidarFechaCierre",
                 data: "{ 'fechaapertura':'" + $("#lblFecApertura").val() + "','fechainicio':'" + $("#txtFechaInicio").val() + ' ' + $("#cboHoraInicial").val() + "', 'fechacierre':'" + $("#txtFechaFinal").val() + ' ' + $("#cboHoraFinal").val() + "','usuario':'" + _user.login + "', 'diferencia':" + diferencia + "}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",

@@ -2,6 +2,7 @@
 function Usuario() {
     this.login = "";
     this.ID = 0;
+    this.Permisos = "";
 }
 var Login = {
    
@@ -16,11 +17,12 @@ var Login = {
         });
         $.ajax({
             type: "GET",
-            url: "http://190.143.79.13:89/rest/Login.ashx?u=" + user.value + "&p=" + password.value,
+            url: "http://eservice.rochembiocare.com/rest/Login.ashx?u=" + user.value + "&p=" + password.value,
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {
                 _user.login = user.value;
+                
                 Login.IniciarSesion(data);
                 $.mobile.loading("hide");
             }
@@ -29,8 +31,9 @@ var Login = {
     IniciarSesion: function (data) {
         if (data.respuesta.Exito) {
             _user.ID = data.respuesta.Descripcion;
+            _user.Permisos = data.permisos;
             $.mobile.changePage("#pagSinc", {
-                transition: "slide",
+                transition: "none",
                 reverse: false,
                 changeHash: false
             });

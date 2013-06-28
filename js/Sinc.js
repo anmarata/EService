@@ -1,28 +1,28 @@
 ﻿var Sinc = {
-    Permisos: function (control) {
-        $.ajax({
-            type: "POST",
-            url: "http://190.143.79.13:89/rest/Catalogos.ashx?c=P",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (data) {
-                var cont = 0;
-                DB.Execute("delete from PERMISOS;", function (results) { }, []);
-                for (var i = 0; i < data.length; i++) {
-                    DB.Execute("insert into PERMISOS(ID, VALOR) VALUES('" + data[i].perd_clave + "','" + data[i].perd_valor + "');",
-                        function (results) {
-                            cont++;
-                            var t = (cont * 100) / data.length + " %";
-                            $(control).html(t);
-                        }, []);
-                }
-            }
-        });
-    },
+    //Permisos: function (control) {
+    //    $.ajax({
+    //        type: "POST",
+    //        url: "../rest/Catalogos.ashx?c=P",
+    //        contentType: "application/json; charset=utf-8",
+    //        dataType: "json",
+    //        success: function (data) {
+    //            var cont = 0;
+    //            DB.Execute("delete from PERMISOS;", function (results) { }, []);
+    //            for (var i = 0; i < data.length; i++) {
+    //                DB.Execute("insert into PERMISOS(ID, VALOR) VALUES('" + data[i].perd_clave + "','" + data[i].perd_valor + "');",
+    //                    function (results) {
+    //                        cont++;
+    //                        var t = (cont * 100) / data.length + " %";
+    //                        $(control).html(t);
+    //                    }, []);
+    //            }
+    //        }
+    //    });
+    //},
     Clientes: function (control) {
         $.ajax({
             type: "POST",
-            url: "http://190.143.79.13:89/rest/Catalogos.ashx?c=C",
+            url: "http://eservice.rochembiocare.com/rest/Catalogos.ashx?c=C&p=" + _user.Permisos.Paises + "&a=" + _user.Permisos.Areas + "&u=" + _user.login,
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {
@@ -42,7 +42,7 @@
     Sucursales: function (control) {
         $.ajax({
             type: "POST",
-            url: "http://190.143.79.13:89/rest/Catalogos.ashx?c=S",
+            url: "http://eservice.rochembiocare.com/rest/Catalogos.ashx?c=S&p=" + _user.Permisos.Paises + "&a=" + _user.Permisos.Areas + "&u=" + _user.login,
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {
@@ -62,7 +62,7 @@
     Equipos: function (control) {
         $.ajax({
             type: "POST",
-            url: "http://190.143.79.13:89/rest/Catalogos.ashx?c=E",
+            url: "http://eservice.rochembiocare.com/rest/Catalogos.ashx?c=E&p=" + _user.Permisos.Paises + "&a=" + _user.Permisos.Areas + "&u=" + _user.login,
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {
@@ -82,7 +82,7 @@
     TipoSolicitud: function (control) {
         $.ajax({
             type: "POST",
-            url: "http://190.143.79.13:89/rest/Catalogos.ashx?c=TS",
+            url: "http://eservice.rochembiocare.com/rest/Catalogos.ashx?c=TS&p=" + _user.Permisos.Paises + "&a=" + _user.Permisos.Areas + "&u=" + _user.login,
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {
@@ -104,7 +104,7 @@
         InsertarValores: function (control) {
             $.ajax({
                 type: "POST",
-                url: "http://190.143.79.13:89/rest/Catalogos.ashx?c=V",
+                url: "http://eservice.rochembiocare.com/rest/Catalogos.ashx?c=V&p=" + _user.Permisos.Paises + "&a=" + _user.Permisos.Areas + "&u=" + _user.login,
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (data) {
@@ -129,7 +129,7 @@
         function r()
         {
             Sinc.Version.InsertarValores('');
-            Sinc.Permisos('#spanPermisos');
+           // Sinc.Permisos('#spanPermisos');
             Sinc.Clientes('#spanClientes');
             Sinc.Sucursales('#spanSucursal');
             Sinc.Equipos('#spanEquipos');
@@ -144,7 +144,7 @@
             else {
                 $.ajax({
                     type: "POST",
-                    url: "http://190.143.79.13:89/rest/Catalogos.ashx?c=V",
+                    url: "http://eservice.rochembiocare.com/rest/Catalogos.ashx?c=V",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (data) {
@@ -153,7 +153,7 @@
                                 if (data[i].v_catalogo == result.rows.item(j).CATALOGO) {
                                     if (data[i].v_version == result.rows.item(j).NVERSION) {
                                         switch (result.rows.item(j).CATALOGO) {
-                                            case "Permisos": $('#spanPermisos').html("Versión: " + result.rows.item(j).NVERSION); break;
+                                           // case "Permisos": $('#spanPermisos').html("Versión: " + result.rows.item(j).NVERSION); break;
                                             case "Clientes": $('#spanClientes').html("Versión: " + result.rows.item(j).NVERSION); break;
                                             case "Sucursales": $('#spanSucursal').html("Versión: " + result.rows.item(j).NVERSION); break;
                                             case "Equipos": $('#spanEquipos').html("Versión: " + result.rows.item(j).NVERSION); break;
@@ -162,7 +162,7 @@
                                     }
                                     else {
                                         switch (result.rows.item(j).CATALOGO) {
-                                            case "Permisos": Sinc.Permisos('#spanPermisos'); Sinc.Version.Actualizar(result.rows.item(j).ID, data[i].v_version); break;
+                                            //case "Permisos": Sinc.Permisos('#spanPermisos'); Sinc.Version.Actualizar(result.rows.item(j).ID, data[i].v_version); break;
                                             case "Clientes": Sinc.Clientes('#spanClientes'); Sinc.Version.Actualizar(result.rows.item(j).ID, data[i].v_version); break;
                                             case "Sucursales": Sinc.Sucursales('#spanSucursal'); Sinc.Version.Actualizar(result.rows.item(j).ID, data[i].v_version); break;
                                             case "Equipos": Sinc.Equipos('#spanEquipos'); Sinc.Version.Actualizar(result.rows.item(j).ID, data[i].v_version); break;
