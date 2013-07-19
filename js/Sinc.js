@@ -178,3 +178,16 @@
         }
     }
 }
+var Configuracion = {
+    Cambio: function () {        
+        _user.Permisos.Paises = $('#cboPais').val();
+        _user.Permisos.Areas = $('#cboArea').val();
+        DB.Execute("delete from VERSION;", function (results) { }, []);
+        $.mobile.changePage("#pagSinc", {
+            transition: "none",
+            reverse: false,
+            changeHash: false
+        });
+        DB.Execute("select * from version;", Sinc.Actializar);
+    }
+}
