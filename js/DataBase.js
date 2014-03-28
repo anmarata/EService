@@ -18,7 +18,7 @@ var DB = {
                     //VERSION
                     transaction.executeSql("CREATE TABLE IF NOT EXISTS VERSION (ID INTEGER PRIMARY KEY AUTOINCREMENT, CATALOGO VARCHAR(50) NOT NULL, NVERSION INTEGER NOT NULL);");
                     //CLIENTES
-                    transaction.executeSql("CREATE TABLE IF NOT EXISTS CLIENTES (ID INTEGER NOT NULL, DESCRIPCION TEXT NOT NULL);");
+                    transaction.executeSql("CREATE TABLE IF NOT EXISTS CLIENTES (ID INTEGER NOT NULL, DESCRIPCION TEXT NOT NULL, IDPAIS INTEGER NOT NULL);");
                     //SUCURSALES
                     transaction.executeSql("CREATE TABLE IF NOT EXISTS SUCURSAL (ID INTEGER NOT NULL, DESCRIPCION TEXT NOT NULL, IDCLI INTEGER NOT NULL);");
                     //EQUIPOS

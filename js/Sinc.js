@@ -29,7 +29,7 @@
                 var cont = 0;
                 DB.Execute("delete from CLIENTES;", function (results) { }, []);
                 for (var i = 0; i < data.length; i++) {
-                    DB.Execute("insert into CLIENTES(ID, DESCRIPCION) VALUES('" + data[i].cl_id + "','" + data[i].cl_nombre + "');",
+                    DB.Execute("insert into CLIENTES(ID, DESCRIPCION, IDPAIS) VALUES('" + data[i].cl_id + "','" + data[i].cl_nombre +"','" + data[i].cl_pais + "');",
                         function (results) {
                             cont++;
                             var t = (cont * 100) / data.length + " %";
@@ -90,7 +90,7 @@
                 DB.Execute("delete from TIPOSOLICITUD;", function (results) { }, []);
                 for (var i = 0; i < data.length; i++) {
 
-                    DB.Execute("insert into TIPOSOLICITUD(ID, DESCRIPCION,IDAREA) VALUES('" + data[i].ts_id + "','" + data[i].ts_descrip + "','');",
+                    DB.Execute("insert into TIPOSOLICITUD(ID, DESCRIPCION,IDAREA) VALUES('" + data[i].ts_id + "','" + data[i].ts_descrip + "','" + data[i].ts_area + "');",
                         function (results) {
                             cont++;
                             var t = (cont * 100) / data.length + " %";
@@ -176,18 +176,5 @@
                 });
             }
         }
-    }
-}
-var Configuracion = {
-    Cambio: function () {        
-        _user.Permisos.Paises = $('#cboPais').val();
-        _user.Permisos.Areas = $('#cboArea').val();
-        DB.Execute("delete from VERSION;", function (results) { }, []);
-        $.mobile.changePage("#pagSinc", {
-            transition: "none",
-            reverse: false,
-            changeHash: false
-        });
-        DB.Execute("select * from version;", Sinc.Actializar);
     }
 }

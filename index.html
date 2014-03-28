@@ -42,8 +42,11 @@
                         break;
                 }
             });
-            $("#cboCliente").change(function (event) { DB.Execute("Select * from sucursal where IDCLI = " + $("#cboCliente").val(), function (result) { ArmarSelect("#cboSucursal", result, 0); }); });
+            $("#cboPais").change(function (event) {DB.Execute("Select * from clientes where idPais = " + $("#cboPais").val(), function (result) { ArmarSelect("#cboCliente", result, 0); });});
             $("#cboSucursal").change(function (event) { DB.Execute("Select * from EQUIPOS where IDSUC = " + $("#cboSucursal").val(), function (result) { ArmarSelect("#cboEquipo", result, 0); }); });
+            $("#cboCliente").change(function (event) { DB.Execute("Select * from sucursal where IDCLI = " + $("#cboCliente").val(), function (result) { ArmarSelect("#cboSucursal", result, 0); }); });
+            $("#cboArea").change(function (event) { DB.Execute("Select * from TIPOSOLICITUD where idarea=" + $("#cboArea").val(), function (result) { ArmarSelect("#cboTipoServicio", result, 0); }); });
+
             //$("#cboEquipo").change(function (event) { });            
         });
     </script>
@@ -83,27 +86,7 @@
         </h3>
     </div>
     <div data-role="content">
-        <div data-role="fieldcontain">
-            <label for="cboPais">
-                Pais:
-            </label>
-            <select id="cboPais" name="">
-                <option value="5">ARGENTINA</option>
-                <option value="1">COLOMBIA</option>
-                <option value="2">ECUADOR</option>
-                <option value="4">PANAMA</option>
-                <option value="3">PERU</option>
-            </select>
-        </div>
-        <div data-role="fieldcontain">
-            <label for="cboArea">Area:</label>
-            <select id="cboArea" name="">
-                <option value="4">ADMINISTRACION</option>
-                <option value="1">ASESORIA CIENTIFICA</option>
-                <option value="2">INFORMÁTICA</option>
-                <option value="3">SERVICIO TECNICO</option>
-            </select>
-        </div>
+        
         <a data-role="button" data-transition="none" data-theme="b" href="javascript:Configuracion.Cambio();" data-icon="check" data-iconpos="right">Aceptar</a>
     </div>
 </div>
@@ -266,6 +249,30 @@
             <div data-role="collapsible-set">
                 <div data-role="collapsible" data-collapsed="false" data-theme="b" data-content-theme="c">
                     <h3>Informacion del Reporte</h3>
+
+                    <div data-role="fieldcontain">
+            <label for="cboPais">
+                Pais:
+            </label>
+            <select id="cboPais" name="" data-mini="true" required>
+                <option value="5">ARGENTINA</option>
+                <option value="6">CHILE</option>
+                <option value="1">COLOMBIA</option>
+                <option value="2">ECUADOR</option>
+                <option value="4">PANAMA</option>
+                <option value="3">PERU</option>
+            </select>
+        </div>
+        <div data-role="fieldcontain">
+            <label for="cboArea">Area:</label>
+            <select id="cboArea" name="" data-mini="true" required>
+                <option value="4">ADMINISTRACION</option>
+                <option value="1">ASESORIA CIENTIFICA</option>
+                <option value="2">INFORMÁTICA</option>
+                <option value="3">SERVICIO TECNICO</option>
+            </select>
+        </div>
+
                     <div data-role="fieldcontain">
                         <label for="cboCliente">Cliente:</label>
                         <select id="cboCliente" name=""  data-mini="true" required></select>
@@ -279,6 +286,14 @@
                     <div data-role="fieldcontain">
                         <label for="cboTipoServicio">Tipo Servicio:</label><select id="cboTipoServicio" name="" data-mini="true" required></select>
                     </div>
+
+                    
+                    <div data-role="fieldcontain">
+                        <label for="txtNumeroReporte">Numero Reporte:</label><input type="text" id="txtNumeroReporte" data-mini="true" >
+                    </div>
+                    
+                    
+
                     <div data-role="fieldcontain">
                         <label for="txtMotivo">Motivo:</label><textarea name="" id="txtMotivo" placeholder="" data-mini="true" required></textarea>
                     </div>

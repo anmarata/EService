@@ -24,14 +24,15 @@
     this.idsol;
     this.tiempotraslado;
     this.diferencia;
+    this.revisionSeguridad;
 }
 var Reportes = {
     Nuevo: function () {
         Sol_ID = 0;
-        DB.Execute("Select * from clientes ", function (result) { ArmarSelect("#cboCliente", result, 0); });
+        DB.Execute("Select * from clientes where idPais = " + $("#cboPais").val(), function (result) { ArmarSelect("#cboCliente", result, 0); });
         DB.Execute("Select * from sucursal where IDCLI = " + $("#cboCliente").val(), function (result) { ArmarSelect("#cboSucursal", result, 0); });
         DB.Execute("Select * from EQUIPOS where IDSUC = " + $("#cboSucursal").val(), function (result) { ArmarSelect("#cboEquipo", result, 0); });
-        DB.Execute("Select * from TIPOSOLICITUD ", function (result) { ArmarSelect("#cboTipoServicio", result, 0); });
+        DB.Execute("Select * from TIPOSOLICITUD where idarea=" + $("#cboArea").val(), function (result) { ArmarSelect("#cboTipoServicio", result, 0); });
         $("#txtMotivo").val('');
         $("#txtLabor").val('');
         $("#txtObservacion").val('');
@@ -43,6 +44,10 @@ var Reportes = {
         $("#txtEmail").val('');
         $("#chkFinalizado").attr("checked", "true");
         $("#chkFinalizado").prop("checked", true).checkboxradio("refresh");
+
+        $("#chkRevisionSeguridad").attr("checked", "false");
+        $("#chkRevisionSeguridad").prop("checked", false).checkboxradio("refresh");
+
         $("#txtTelefono").val('');
         $("#txtHorasCapacitacion").val(0);
         $("#cboTiempotraslado").val('00:00');
@@ -52,9 +57,10 @@ var Reportes = {
         var rep = new Reporte();
 
         rep.id = "0";
-        rep.pais_id = _user.Permisos.Paises;
-        rep.area_id = _user.Permisos.Areas;
-        rep.nro_reporte = "";
+        rep.pais_id = $("#cboPais").val(); //_user.Permisos.Paises;
+        rep.area_id = $("#cboArea").val();//_user.Permisos.Areas;
+        //rep.nro_reporte = "";
+        rep.nro_reporte = $("#txtNumeroReporte").val();
         rep.usr = _user.login;
         rep.cliente_id = $("#cboCliente").val();
         rep.sucursal_id = $("#cboSucursal").val();
@@ -73,6 +79,7 @@ var Reportes = {
         rep.fechaini = $("#txtFecInicial").val() + " " + $("#cboRepHoraInicio").val();
         rep.fechafin = $("#txtFecFinal").val() + " " + $("#cboRepHoraFinal").val();
         rep.hora_capacitacion = $("#txtHorasCapacitacion").val();
+        rep.revisionSeguridad = chkRevisionSeguridad.checked;
         if (Sol_ID == 0)
             rep.idsol = [];
         else
@@ -109,6 +116,12 @@ var Reportes = {
                 DB.Execute("Select * from EQUIPOS where ID = " + data.d.EquipoId, function (result) { ArmarSelect("#cboEquipo", result, data.d.EquipoId); });
                 DB.Execute("Select * from TIPOSOLICITUD where ID=" + data.d.TipoSolicitudId, function (result) { ArmarSelect("#cboTipoServicio", result, data.d.TipoSolicitudId); });
 
+                $("#cboPais").val(data.d.PaisId);
+                $('#cboPais').selectmenu("refresh", true);
+
+                $("#cboArea").val(data.d.AreaId);
+                $('#cboArea').selectmenu("refresh", true);
+                
                 $("#txtMotivo").val(data.d.Motivo);
                 $("#txtLabor").val('');
                 $("#txtObservacion").val('');
