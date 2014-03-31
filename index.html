@@ -23,6 +23,8 @@
             $("#progressbar").progressbar({
                 value: false
             });
+
+
             var t = new Date(1900, 1, 1, 0, 0, 0, 0);
             while (t < (new Date(1900, 1, 2, 0, 0, 0, 0))) {
                 $("#cboHoraInicial").append(new Option(("0" + t.getHours()).slice(-2) + ":" + ("0" + t.getMinutes()).slice(-2), ("0" + t.getHours()).slice(-2) + ":" + ("0" + t.getMinutes()).slice(-2), false, false));
@@ -30,6 +32,7 @@
                 $("#cboRepHoraInicio").append(new Option(("0" + t.getHours()).slice(-2) + ":" + ("0" + t.getMinutes()).slice(-2), ("0" + t.getHours()).slice(-2) + ":" + ("0" + t.getMinutes()).slice(-2), false, false));
                 $("#cboRepHoraFinal").append(new Option(("0" + t.getHours()).slice(-2) + ":" + ("0" + t.getMinutes()).slice(-2), ("0" + t.getHours()).slice(-2) + ":" + ("0" + t.getMinutes()).slice(-2), false, false));
                 $("#cboTiempotraslado").append(new Option(("0" + t.getHours()).slice(-2) + ":" + ("0" + t.getMinutes()).slice(-2), ("0" + t.getHours()).slice(-2) + ":" + ("0" + t.getMinutes()).slice(-2), false, false));
+                $("#cboHoraSol").append(new Option(("0" + t.getHours()).slice(-2) + ":" + ("0" + t.getMinutes()).slice(-2), ("0" + t.getHours()).slice(-2) + ":" + ("0" + t.getMinutes()).slice(-2), false, false));
 
                 t.setMinutes(t.getMinutes() + 15);
             }
@@ -42,21 +45,48 @@
                         break;
                 }
             });
-            $("#cboPais").change(function (event) {DB.Execute("Select * from clientes where idPais = " + $("#cboPais").val(), function (result) { ArmarSelect("#cboCliente", result, 0); });});
+            //Reportes
+            $("#cboPais").change(function (event) { DB.Execute("Select * from clientes where idPais = " + $("#cboPais").val(), function (result) { ArmarSelect("#cboCliente", result, 0); }); });
             $("#cboSucursal").change(function (event) { DB.Execute("Select * from EQUIPOS where IDSUC = " + $("#cboSucursal").val(), function (result) { ArmarSelect("#cboEquipo", result, 0); }); });
             $("#cboCliente").change(function (event) { DB.Execute("Select * from sucursal where IDCLI = " + $("#cboCliente").val(), function (result) { ArmarSelect("#cboSucursal", result, 0); }); });
             $("#cboArea").change(function (event) { DB.Execute("Select * from TIPOSOLICITUD where idarea=" + $("#cboArea").val(), function (result) { ArmarSelect("#cboTipoServicio", result, 0); }); });
 
+            //Solicitudes
+            $("#cboPaisSol").change(function (event) { DB.Execute("Select * from clientes where idPais = " + $("#cboPaisSol").val(), function (result) { ArmarSelect("#cboClienteSol", result, 0); }); });
+            $("#cboSucursalSol").change(function (event) { DB.Execute("Select * from EQUIPOS where IDSUC = " + $("#cboSucursalSol").val(), function (result) { ArmarSelect("#cboEquipoSol", result, 0); }); });
+            $("#cboClienteSol").change(function (event) { DB.Execute("Select * from sucursal where IDCLI = " + $("#cboClienteSol").val(), function (result) { ArmarSelect("#cboSucursalSol", result, 0); }); });
+            $("#cboAreaSol").change(function (event) { DB.Execute("Select * from TIPOSOLICITUD where idarea=" + $("#cboAreaSol").val(), function (result) { ArmarSelect("#cboTipoServicioSol", result, 0); }); });
+
             //$("#cboEquipo").change(function (event) { });            
+
+
         });
-    </script>
-    <script>     
-    </script>
-    <!--Sinc-->
-    <script>      
-    </script>
+
+        if (localStorage.user == 'undefined' || localStorage.user == undefined) {
+            setTimeout(Menu.CerrarSesion, 500);
+        }
+        else {
+            _user = JSON.parse(localStorage.user);
+            setTimeout(Solicitudes.Lista, 500);
+
+        }
+    </script>   
 </head>
 <body>
+    <div data-role="page" >
+         <div data-role="content" style=" position:absolute;top:0px;    right:0;    bottom:0;    left:0; ">
+
+             
+             <div >
+                    
+                 <h1>E-Service</h1>
+                 <hr />
+                 <h4>Cargando...</h4>
+                 <div class="ui-progressbar ui-widget ui-widget-content ui-corner-all ui-progressbar-indeterminate" role="progressbar" aria-valuemin="0">
+                     <div class="ui-progressbar-value ui-widget-header ui-corner-left" style="width: 100%;"><div class="ui-progressbar-overlay"></div></div></div>
+                </div>
+             </div>
+        </div>
     <!-- Login -->
     <div data-role="page" id="pagLogin">
         <div data-theme="b" data-role="header">
@@ -79,17 +109,7 @@
 
         </div>
     </div>
-    <div data-role="page" id="pagConfig">
-    <div data-theme="b" data-role="header">
-        <h3>
-            E-Service
-        </h3>
-    </div>
-    <div data-role="content">
-        
-        <a data-role="button" data-transition="none" data-theme="b" href="javascript:Configuracion.Cambio();" data-icon="check" data-iconpos="right">Aceptar</a>
-    </div>
-</div>
+    
     <!-- Sincronizacion -->
     <div data-role="page" id="pagSinc">
         <div data-theme="b" data-role="header">
@@ -120,6 +140,9 @@
                 </li>
                 <li data-theme="c" data-icon="bars">
                     <a href="javascript:Menu.ListaSolicitudes();" data-transition="slide">Lista Solicitudes<span class="ui-li-count" id="NroSolicitudes">12</span></a>
+                </li>
+                <li data-theme="c" data-icon="edit">
+                    <a href="javascript:Menu.Solicitudes();" data-transition="slide">Solicitudes</a>
                 </li>
                 <li data-theme="c" data-icon="edit">
                     <a href="javascript:Menu.Reportes();" data-transition="slide">Reportes</a>
@@ -376,5 +399,76 @@
             <button data-theme="b" data-icon="check" data-iconpos="right" value="Guardar" onclick="JavaScript:Reportes.Validar.FechaCierre(true);">Guardar</button>
         </div>
     </div>
+    <!-- Crear Solicitud -->
+    <div data-role="page" id="pagIngSol">
+        <div data-theme="b" data-role="header">
+            <a href="javascript:Menu.Menu();" data-role="button" data-icon="bars" data-iconpos="notext" data-theme="b" data-inline="true" class="ui-icon-bars" data-transition="slide">Menu</a>
+            <h3>E-Service</h3>
+            <a href="Javascript:Solicitudes.Nuevo();" data-role="button" data-icon="plus" data-iconpos="notext" data-theme="b" data-inline="true" class="ui-icon-plus" data-transition="slide">Nuevo</a>
+        </div>
+        <div data-role="content">
+            <div data-role="collapsible-set">
+                <div data-role="collapsible" data-collapsed="false" data-theme="b" data-content-theme="c">
+                    <h3>Informacion de la Solicitud</h3>
+                    <div data-role="fieldcontain">
+            <label for="cboPaisSol">Pais:</label>
+            <select id="cboPaisSol" name="" data-mini="true" required>
+                <option value="5">ARGENTINA</option>
+                <option value="6">CHILE</option>
+                <option value="1">COLOMBIA</option>
+                <option value="2">ECUADOR</option>
+                <option value="4">PANAMA</option>
+                <option value="3">PERU</option>
+            </select>
+        </div>
+        <div data-role="fieldcontain">
+            <label for="cboAreaSol">Area:</label>
+            <select id="cboAreaSol" name="" data-mini="true" required>
+                <option value="4">ADMINISTRACION</option>
+                <option value="1">ASESORIA CIENTIFICA</option>
+                <option value="2">INFORMÁTICA</option>
+                <option value="3">SERVICIO TECNICO</option>
+            </select>
+        </div>
+                    <div data-role="fieldcontain"><label for="cboClienteSol">Cliente:</label><select id="cboClienteSol" name=""  data-mini="true" required></select></div>
+                    <div data-role="fieldcontain"><label for="cboSucursalSol">Sucursal:</label><select id="cboSucursalSol" name=""  data-mini="true" required></select></div>
+                    <div data-role="fieldcontain"><label for="cboEquipoSol">Equipo:</label><select id="cboEquipoSol" name="" data-mini="true" required></select></div>
+                    <div data-role="fieldcontain"><label for="cboTipoServicioSol">Tipo Servicio:</label><select id="cboTipoServicioSol" name="" data-mini="true" required></select></div>
+                    <div data-role="fieldcontain"><label for="txtMotivoSol">Motivo:</label><textarea name="" id="txtMotivoSol" placeholder="" data-mini="true" required></textarea></div>
+                    
+                    <div data-role="fieldcontain">
+                        <label for="txtFecSol">Fecha:</label>
+                        <div class="ui-grid-a">
+                            <div class="ui-block-a">
+                                <div data-role="fieldcontain">
+                                    <input type="date" id="txtFecSol" data-mini="true" required />
+                                </div>
+                            </div>
+                            <div class="ui-block-b">
+                                <div data-role="fieldcontain">
+                                    <select id="cboHoraSol" data-mini="true" required></select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div data-role="fieldcontain">
+                        <label for="txtClienteSolicita">Solicitado Por:</label><input type="text" id="txtClienteSolicita" data-mini="true" required>
+                    </div>
+                    <div data-role="fieldcontain">
+                        <label for="txtEmailSol">Emails:</label><input type="email" id="txtEmailSol" data-mini="true">
+                    </div>
+
+
+                    
+                    </div>
+            </div>
+            <div data-role="fieldcontain">
+                <label id="errorSol" style="color: #800000; font-weight: bold"></label>
+            </div>
+            <button data-theme="b" data-icon="check" data-iconpos="right" value="Guardar" onclick="JavaScript:Solicitudes.Validar.FechaApertura(true);">Guardar</button>
+        </div>
+    </div>
+
 </body>
 </html>

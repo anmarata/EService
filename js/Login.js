@@ -33,6 +33,7 @@ var Login = {
             _user.ID = data.respuesta.Descripcion;
             _user.Permisos = data.permisos;
 
+            localStorage["user"] = JSON.stringify(_user);
           
                 $.mobile.changePage("#pagSinc", {
                     transition: "none",

@@ -1,4 +1,12 @@
 ﻿var Menu = {
+    Solicitudes: function () {
+        $.mobile.changePage("#pagIngSol", {
+            transition: "none",
+            reverse: false,
+            changeHash: false
+        });
+        Solicitudes.Nuevo();
+    },
     Reportes: function () {
         $.mobile.changePage("#pagIngRep", {
             transition: "none",
@@ -18,6 +26,7 @@
         });
     },
     CerrarSesion: function () {
+        localStorage.user = undefined;
         $.mobile.changePage("#pagLogin", {
             transition: "none",
             reverse: false,

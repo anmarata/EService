@@ -32,7 +32,7 @@
                     DB.Execute("insert into CLIENTES(ID, DESCRIPCION, IDPAIS) VALUES('" + data[i].cl_id + "','" + data[i].cl_nombre +"','" + data[i].cl_pais + "');",
                         function (results) {
                             cont++;
-                            var t = (cont * 100) / data.length + " %";
+                            var t = Math.round(cont * 10000 / data.length) / 100 + " %";
                             $(control).html(t);
                         }, []);
                 }
@@ -52,7 +52,7 @@
                     DB.Execute("insert into SUCURSAL(ID, DESCRIPCION, IDCLI) VALUES('" + data[i].cd_id + "','" + data[i].cd_nombre + "','" + data[i].cd_cli_id + "');",
                         function (results) {
                             cont++;
-                            var t = (cont * 100) / data.length + " %";
+                            var t = Math.round(cont * 10000 / data.length) / 100 + " %";//(cont * 100) / data.length + " %";
                             $(control).html(t);
                         });
                 }
@@ -72,7 +72,7 @@
                     DB.Execute("insert into EQUIPOS(ID, DESCRIPCION, IDSUC) VALUES('" + data[i].a_id + "','" + data[i].a_descrip + "','" + data[i].m_clidet_id + "');",
                         function (results) {
                             cont++;
-                            var t = (cont * 100) / data.length + " %";
+                            var t = Math.round(cont * 10000 / data.length) / 100 + " %";//(cont * 100) / data.length + " %";
                             $(control).html(t);
                         }, []);
                 }
@@ -93,7 +93,7 @@
                     DB.Execute("insert into TIPOSOLICITUD(ID, DESCRIPCION,IDAREA) VALUES('" + data[i].ts_id + "','" + data[i].ts_descrip + "','" + data[i].ts_area + "');",
                         function (results) {
                             cont++;
-                            var t = (cont * 100) / data.length + " %";
+                            var t = Math.round(cont * 10000 / data.length) / 100 + " %";//(cont * 100) / data.length + " %";
                             $(control).html(t);
                         }, []);
                 }
