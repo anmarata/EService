@@ -68,7 +68,15 @@
         else {
             _user = JSON.parse(localStorage.user);
             setTimeout(Solicitudes.Lista, 500);
+        }
 
+        $(document).ready(function () {
+            document.addEventListener("deviceready", onDeviceReady, false);
+
+        });
+        function onDeviceReady() {
+            document.addEventListener("menubutton", Menu.Menu, false);
+            document.addEventListener("backbutton", Menu.Atras, false);
         }
     </script>   
 </head>

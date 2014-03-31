@@ -34,6 +34,13 @@
         });
         $("#password").val('');
     },
+    Atras: function () {
+        if ($.mobile.activePage.attr('id') == 'pagListSol') {
+            navigator.app.exitApp();
+        } else {
+            $.mobile.changePage('#pagListSol');
+        } 
+    },
     Menu: function () {
         $.mobile.changePage("#pagMenu", {
             transition: "none",
